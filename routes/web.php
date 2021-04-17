@@ -1,13 +1,13 @@
 <?php
-// MyVendor\formulario-contato\src\routes\web.php
-Route::get('contato', function(){
-    return 'Hello World do seu Pacote!';
-});
 
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use ScadaUnity\Money\Http\Controllers\Inertia\DashboardController;
+
+/*
 Route::get('money', function(){
-  echo "Money";
+  return Inertia::render('Money/dashboard');
 });
+*/
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::get('/money', [DashboardController::class, 'show'])->name('money.dashboard');
