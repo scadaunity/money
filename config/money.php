@@ -43,7 +43,7 @@ return [
     */
 
     'features' => [
-        Features::createCategory(),
+        //Features::createCategory(),
     ],
 
 ];
