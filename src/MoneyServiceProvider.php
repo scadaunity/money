@@ -21,7 +21,6 @@ class MoneyServiceProvider extends ServiceProvider
     public function register()
     {
       $this->mergeConfigFrom(__DIR__.'/../config/money.php', 'money');
-      $this->loadRoutesFrom(__DIR__.'./../routes/web.php');
 
     }
 

@@ -5,13 +5,13 @@ namespace ScadaUnity\Money\Http\Controllers\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Laravel\Jetstream\Jetstream;
+use ScadaUnity\Money\Money;
 
 
 /**
  *
  */
-class DashboardController extends Controller
+class MoneyController extends Controller
 {
 
   /**
@@ -22,7 +22,6 @@ class DashboardController extends Controller
    */
   public function show(Request $request)
   {
-      //echo "DasboardController::show";
-      return Inertia::render('Money/dashboard');
+      return Money::inertia()->render($request, 'Money/dashboard');
   }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use ScadaUnity\Money\Http\Controllers\Inertia\MoneyController;
+use ScadaUnity\Money\Http\Controllers\Livewire\MoneyController;
 use ScadaUnity\Money\Money;
 
 Route::group(['middleware' => config('money.middleware', ['web'])], function () {
