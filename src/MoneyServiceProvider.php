@@ -11,6 +11,7 @@ class MoneyServiceProvider extends ServiceProvider
       $this->loadViewsFrom(__DIR__.'/../resources/views', 'money');
 
       // config.
+      $this->configurePermissions();
       $this->configurePublishing();
       $this->configureRoutes();
       $this->configureCommands();
@@ -89,5 +90,28 @@ class MoneyServiceProvider extends ServiceProvider
         if (class_exists(HandleInertiaRequests::class)) {
             $kernel->appendToMiddlewarePriority(HandleInertiaRequests::class);
         }
+    }
+
+    /**
+     * Configure the roles and permissions that are available within the application.
+     *
+     * @return void
+     */
+    protected function configurePermissions()
+    {
+        Money::defaultApiTokenPermissions(['read']);
+
+        Money::role('admin', __('Administrador'), [
+            'create',
+            'read',
+            'update',
+            'delete',
+        ])->description(__('Usuario administrador, podera realizar qualquer função.'));
+
+        Money::role('editor', __('Editor'), [
+            'read',
+            'create',
+            'update',
+        ])->description(__('Editor users have the ability to read, create, and update.'));
     }
 }
