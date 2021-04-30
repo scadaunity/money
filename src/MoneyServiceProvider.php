@@ -125,7 +125,7 @@ class MoneyServiceProvider extends ServiceProvider
             'read',
             'update',
             'delete',
-        ])->description(__('Usuario administrador, podera realizar qualquer função.'));
+        ])->description(__('Usuario administrador, poderá realizar qualquer função.'));
 
         Money::role('editor', __('Editor'), [
             'read',
