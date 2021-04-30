@@ -3,12 +3,13 @@
 namespace ScadaUnity\Money;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\RedirectResponse;
+use ScadaUnity\Money\Http\Middleware\ShareInertiaData;
 class MoneyServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-      //diz ao laravel onde ficam as visualizações do pacote
-      $this->loadViewsFrom(__DIR__.'/../resources/views', 'money');
 
       // config.
       $this->configurePermissions();
@@ -17,7 +18,25 @@ class MoneyServiceProvider extends ServiceProvider
       $this->configureCommands();
       //
 
-      $this->loadMigrationsFrom(__DIR__.'./../database/migrations');
+      $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+      RedirectResponse::macro('banner', function ($message) {
+          return $this->with('flash', [
+              'bannerStyle' => 'success',
+              'banner' => $message,
+          ]);
+      });
+
+      RedirectResponse::macro('dangerBanner', function ($message) {
+          return $this->with('flash', [
+              'bannerStyle' => 'danger',
+              'banner' => $message,
+          ]);
+      });
+
+      if (config('money.stack') === 'inertia') {
+          $this->bootInertia();
+      }
     }
     public function register()
     {
