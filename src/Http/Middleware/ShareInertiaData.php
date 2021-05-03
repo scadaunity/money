@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use Laravel\Jetstream\Jetstream;
+use ScadaUnity\Money\Models\Account;
 
 class ShareInertiaData
 {
@@ -22,8 +23,7 @@ class ShareInertiaData
         Inertia::share(array_filter([
               'money' => function () use ($request) {
                 return [
-                    'teste'=>"doug",
-                    'teste2'=>"ola"
+                    'account'=>Account::all(),
                 ];
             },
             'user' => function () use ($request) {

@@ -15,6 +15,8 @@ class CreateMoneyAccountsTable extends Migration
     {
         Schema::create('money_accounts', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->decimal('opening_balance',15,2)->nullable()->default(0);
             $table->timestamps();
         });
     }

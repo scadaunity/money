@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use ScadaUnity\Money\Money;
+use ScadaUnity\Money\Models\Account;
 use Laravel\Jetstream\Jetstream;
 use App\Models\User;
 
@@ -38,7 +39,10 @@ class MoneyController extends Controller
    */
   public function account(Request $request)
   {
-      return Money::inertia()->render($request, 'Money/Account');
+      $data = array(
+        
+      );
+      return Money::inertia()->render($request, 'Money/Account', $data);
   }
 
   /**
