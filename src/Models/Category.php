@@ -5,7 +5,7 @@ namespace ScadaUnity\Money\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model
+class Category extends Model
 {
   use HasFactory;
 
@@ -14,14 +14,14 @@ class Account extends Model
      *
      * @var string
      */
-    protected $table = 'money_accounts';
+    protected $table = 'money_categories';
 
     /**
        * The attributes that are mass assignable.
        *
        * @var array
        */
-      protected $fillable = ['name', 'user', 'opening_balance'];
+      protected $fillable = ['user', 'team', 'name', 'state', 'type', 'color', 'icon'];
 
 
 }

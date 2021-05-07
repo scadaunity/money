@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use ScadaUnity\Money\Money;
-use ScadaUnity\Money\Models\Account;
+use ScadaUnity\Money\Models\Category;
 use Laravel\Jetstream\Jetstream;
 use App\Models\User;
 
@@ -15,7 +15,7 @@ use App\Models\User;
 /**
  *
  */
-class AccountController extends Controller
+class CategoryController extends Controller
 {
 
   /**
@@ -26,7 +26,7 @@ class AccountController extends Controller
    */
   public function index(Request $request, Money $money)
   {
-      return Money::inertia()->render($request, 'Money/Account');
+      return Money::inertia()->render($request, 'Money/Category');
   }
 
   /**
@@ -35,20 +35,24 @@ class AccountController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-    public function store(Request $request, Account $account)
+    public function store(Request $request, Category $category)
     {
         // Validate the request...
         $request->validate([
-            'name' => ['required', 'string', 'max:50', 'min:3', 'unique:money_accounts,name'],
-            'opening_balance' => ['required', 'numeric']
+            'name' => ['required', 'string', 'max:50', 'min:3', 'unique:money_categories,name'],
         ]);
 
 
         // converte nome
-        $account->name = ucfirst($request->name);
-        $account->user = Auth::id();
-        $account->opening_balance = $request->opening_balance;
-        $account->save();
+        $category->name = ucfirst($request->name);
+        $category->parent_id = $request->parent_id;
+        $category->user = Auth::id();
+        $category->team = 1;
+        $category->color = 'text-blue-800';
+        $category->icon = '';
+        $category->type = 0;
+        $category->state = 0;
+        $category->save();
 
         return back()->with('flash', [
             'success' => 'Conta criada com sucesso',
@@ -59,10 +63,10 @@ class AccountController extends Controller
      * Update the given API token's permissions.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $account
+     * @param  string  $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request,$accountId)
+    public function update(Request $request,$categoryId)
     {
 
       // Validate the request...
@@ -70,10 +74,10 @@ class AccountController extends Controller
           'name' => ['required', 'string', 'max:50', 'min:3'],
           'opening_balance' => ['required', 'numeric']
       ]);
-      $account = Account::find($accountId);
-      $account->name = $request->name;
-      $account->opening_balance = $request->opening_balance;
-      $account->save();
+      $category = Category::find($categoryId);
+      $category->name = $request->name;
+      $category->opening_balance = $request->opening_balance;
+      $category->save();
 
 
       return back();
@@ -85,13 +89,13 @@ class AccountController extends Controller
      * Delete the given API token.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $accountId
+     * @param  string  $categoryId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request,$account)
+    public function destroy(Request $request,$category)
     {
 
-      Account::destroy($account);
+      Category::destroy($category);
 
       return back()->with('flash', [
           //'token' => explode('|', $token->plainTextToken, 2)[1],

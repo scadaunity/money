@@ -15,6 +15,7 @@ class CreateMoneyAccountsTable extends Migration
     {
         Schema::create('money_accounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->decimal('opening_balance',15,2)->nullable()->default(0);
             $table->timestamps();

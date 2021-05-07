@@ -4,10 +4,12 @@ namespace ScadaUnity\Money\Http\Middleware;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use Laravel\Jetstream\Jetstream;
 use ScadaUnity\Money\Models\Account;
+use ScadaUnity\Money\Models\Category;
 
 class ShareInertiaData
 {
@@ -18,34 +20,17 @@ class ShareInertiaData
      * @param  callable  $next
      * @return \Illuminate\Http\Response
      */
+
     public function handle($request, $next)
     {
         Inertia::share(array_filter([
               'money' => function () use ($request) {
                 return [
-                    'account'=>Account::all(),
+                    'account'=>Account::where('user',Auth::id())->orderBy('name')->get(),
+                    'category'=>Category::where('user',Auth::id())->orderBy('name')->get(),
                 ];
             },
-            'user' => function () use ($request) {
-                if (! $request->user()) {
-                    return;
-                }
 
-                if (Jetstream::hasTeamFeatures() && $request->user()) {
-                    $request->user()->currentTeam;
-                }
-
-                return array_merge($request->user()->toArray(), array_filter([
-                    'all_teams' => Jetstream::hasTeamFeatures() ? $request->user()->allTeams() : null,
-                ]), [
-                    'two_factor_enabled' => ! is_null($request->user()->two_factor_secret),
-                ]);
-            },
-            'errorBags' => function () {
-                return collect(optional(Session::get('errors'))->getBags() ?: [])->mapWithKeys(function ($bag, $key) {
-                    return [$key => $bag->messages()];
-                })->all();
-            },
         ]));
 
         return $next($request);
