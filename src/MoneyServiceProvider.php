@@ -91,6 +91,7 @@ class MoneyServiceProvider extends ServiceProvider
 
         $this->commands([
             Console\InstallCommand::class,
+            Console\RemoveCommand::class,
         ]);
     }
 
