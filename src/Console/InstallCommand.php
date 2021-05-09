@@ -33,10 +33,10 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        /* Publish...
-        $this->callSilent('vendor:publish', ['--tag' => 'jetstream-config', '--force' => true]);
-        $this->callSilent('vendor:publish', ['--tag' => 'jetstream-migrations', '--force' => true]);
-        */
+        // Publish...
+        $this->callSilent('vendor:publish', ['--tag' => 'money-config', '--force' => true]);
+        //$this->callSilent('vendor:publish', ['--tag' => 'jetstream-migrations', '--force' => true]);
+
 
         /**
         * Register the MoneyServiceProvider in config.app.providers
@@ -49,7 +49,7 @@ class InstallCommand extends Command
             //$this->installLivewireStack();
             echo ($this->argument('stack'));
         } elseif ($this->argument('stack') === 'inertia') {
-            //$this->installInertiaStack();
+            $this->installInertiaStack();
             echo ($this->argument('stack'));
         }
     }
@@ -234,112 +234,53 @@ EOF;
                 'vue' => '^3.0.5',
                 '@vue/compiler-sfc' => '^3.0.5',
                 'vue-loader' => '^16.1.2',
+                '@headlessui/vue'=> '^1.1.1',
+                '@heroicons/vue'=> '^1.0.1'
             ] + $packages;
         });
 
-        // Sanctum...
-        (new Process(['php', 'artisan', 'vendor:publish', '--provider=Laravel\Sanctum\SanctumServiceProvider', '--force'], base_path()))
-                ->setTimeout(null)
-                ->run(function ($type, $output) {
-                    $this->output->write($output);
-                });
-
-        // Tailwind Configuration...
-        copy(__DIR__.'/../../stubs/inertia/tailwind.config.js', base_path('tailwind.config.js'));
-        copy(__DIR__.'/../../stubs/inertia/webpack.mix.js', base_path('webpack.mix.js'));
-        copy(__DIR__.'/../../stubs/inertia/webpack.config.js', base_path('webpack.config.js'));
-
         // Directories...
-        (new Filesystem)->ensureDirectoryExists(app_path('Actions/Fortify'));
-        (new Filesystem)->ensureDirectoryExists(app_path('Actions/Jetstream'));
-        (new Filesystem)->ensureDirectoryExists(public_path('css'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('css'));
+        (new Filesystem)->ensureDirectoryExists(app_path('Actions/Money'));
+        (new Filesystem)->ensureDirectoryExists(app_path('Models/Money'));
+        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages/Money'));
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Jetstream'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Layouts'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages/API'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages/Auth'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages/Profile'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('views'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('markdown'));
-
-        (new Filesystem)->deleteDirectory(resource_path('sass'));
-
-        // Terms Of Service / Privacy Policy...
-        copy(__DIR__.'/../../stubs/resources/markdown/terms.md', resource_path('markdown/terms.md'));
-        copy(__DIR__.'/../../stubs/resources/markdown/policy.md', resource_path('markdown/policy.md'));
 
         // Service Providers...
-        copy(__DIR__.'/../../stubs/app/Providers/JetstreamServiceProvider.php', app_path('Providers/JetstreamServiceProvider.php'));
+        copy(__DIR__.'/../../stubs/app/Providers/MoneyServiceProvider.php', app_path('Providers/MoneyServiceProvider.php'));
 
-        $this->installServiceProviderAfter('FortifyServiceProvider', 'JetstreamServiceProvider');
-
-        // Middleware...
-        (new Process(['php', 'artisan', 'inertia:middleware', 'HandleInertiaRequests', '--force'], base_path()))
-            ->setTimeout(null)
-            ->run(function ($type, $output) {
-                $this->output->write($output);
-            });
-
-        $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
+        $this->installServiceProviderAfter('JetstreamServiceProvider', 'MoneyServiceProvider');
 
         // Models...
-        copy(__DIR__.'/../../stubs/app/Models/User.php', app_path('Models/User.php'));
+        copy(__DIR__.'/../../stubs/app/Models/Account.php', app_path('Models/Money/Account.php'));
+        copy(__DIR__.'/../../stubs/app/Models/Category.php', app_path('Models/Money/Category.php'));
 
-        // Actions...
-        copy(__DIR__.'/../../stubs/app/Actions/Fortify/CreateNewUser.php', app_path('Actions/Fortify/CreateNewUser.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/Fortify/UpdateUserProfileInformation.php', app_path('Actions/Fortify/UpdateUserProfileInformation.php'));
-        copy(__DIR__.'/../../stubs/app/Actions/Jetstream/DeleteUser.php', app_path('Actions/Jetstream/DeleteUser.php'));
-
-        // Blade Views...
-        copy(__DIR__.'/../../stubs/inertia/resources/views/app.blade.php', resource_path('views/app.blade.php'));
-
-        if (file_exists(resource_path('views/welcome.blade.php'))) {
-            unlink(resource_path('views/welcome.blade.php'));
-        }
+        // Controllers...
+        copy(__DIR__.'/../../stubs/app/Http/Controllers/Inertia/AccountController.php', app_path('Http/Controllers/AccountController.php'));
+        copy(__DIR__.'/../../stubs/app/Http/Controllers/Inertia/AccountController.php', app_path('Http/Controllers/CategoryController.php'));
+        copy(__DIR__.'/../../stubs/app/Http/Controllers/Inertia/MoneyController.php', app_path('Http/Controllers/MoneyController.php'));
 
         // Inertia Pages...
-        copy(__DIR__.'/../../stubs/inertia/resources/js/Pages/Dashboard.vue', resource_path('js/Pages/Dashboard.vue'));
-        copy(__DIR__.'/../../stubs/inertia/resources/js/Pages/PrivacyPolicy.vue', resource_path('js/Pages/PrivacyPolicy.vue'));
-        copy(__DIR__.'/../../stubs/inertia/resources/js/Pages/TermsOfService.vue', resource_path('js/Pages/TermsOfService.vue'));
-        copy(__DIR__.'/../../stubs/inertia/resources/js/Pages/Welcome.vue', resource_path('js/Pages/Welcome.vue'));
 
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Jetstream', resource_path('js/Jetstream'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Layouts', resource_path('js/Layouts'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Pages/API', resource_path('js/Pages/API'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Pages/Auth', resource_path('js/Pages/Auth'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Pages/Profile', resource_path('js/Pages/Profile'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Money', resource_path('js/Money'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia/resources/js/Pages/Money', resource_path('js/Pages/Money'));
+
 
         // Routes...
-        $this->replaceInFile('auth:api', 'auth:sanctum', base_path('routes/api.php'));
 
-        copy(__DIR__.'/../../stubs/inertia/routes/web.php', base_path('routes/web.php'));
 
         // Assets...
-        copy(__DIR__.'/../../stubs/public/css/app.css', public_path('css/app.css'));
-        copy(__DIR__.'/../../stubs/resources/css/app.css', resource_path('css/app.css'));
-        copy(__DIR__.'/../../stubs/inertia/resources/js/app.js', resource_path('js/app.js'));
 
         // Flush node_modules...
         // static::flushNodeModules();
 
         // Tests...
-        copy(__DIR__.'/../../stubs/tests/inertia/ApiTokenPermissionsTest.php', base_path('tests/Feature/ApiTokenPermissionsTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/BrowserSessionsTest.php', base_path('tests/Feature/BrowserSessionsTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/CreateApiTokenTest.php', base_path('tests/Feature/CreateApiTokenTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/DeleteAccountTest.php', base_path('tests/Feature/DeleteAccountTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/DeleteApiTokenTest.php', base_path('tests/Feature/DeleteApiTokenTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/ProfileInformationTest.php', base_path('tests/Feature/ProfileInformationTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/TwoFactorAuthenticationSettingsTest.php', base_path('tests/Feature/TwoFactorAuthenticationSettingsTest.php'));
-        copy(__DIR__.'/../../stubs/tests/inertia/UpdatePasswordTest.php', base_path('tests/Feature/UpdatePasswordTest.php'));
+
 
         // Teams...
-        if ($this->option('teams')) {
-            $this->installInertiaTeamStack();
-        }
+
 
         $this->line('');
-        $this->info('Inertia scaffolding installed successfully.');
+        $this->info('Money scaffolding installed successfully.');
         $this->comment('Please execute "npm install && npm run dev" to build your assets.');
     }
 
