@@ -16,7 +16,6 @@ class CreateMoneyCategoriesTable extends Migration
         Schema::create('money_categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('team')->constrained('teams')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('money_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->boolean('state')->nullable();
