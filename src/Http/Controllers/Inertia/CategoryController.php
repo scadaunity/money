@@ -48,7 +48,7 @@ class CategoryController extends Controller
         $category->parent_id = $request->parent_id;
         $category->user = Auth::id();
         $category->team = 1;
-        $category->color = 'text-blue-800';
+        $category->color = $request->color;
         $category->icon = '';
         $category->type = 0;
         $category->state = 0;

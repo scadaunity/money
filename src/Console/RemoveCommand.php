@@ -24,7 +24,7 @@ class RemoveCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install the Money components and resources';
+    protected $description = 'Remove the Money components and resources';
 
     /**
      * Execute the console command.
