@@ -18,14 +18,20 @@
                 "ScadaUnity\\Money\\": "src/"
             }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "ScadaUnity\\Money\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "ScadaUnity\\Money\\MoneyServiceProvider"
             ]
         }
-    },
-    "config": {
-        "sort-packages": true
     }
+
 }
