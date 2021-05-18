@@ -28,7 +28,7 @@ class MoneyController extends Controller
       $data = array(
         //'user' => $money::$registersRoutes,
       );
-      return Money::inertia()->render($request, 'Money/dashboard',$data);
+      return Money::inertia()->render($request, 'Money/Dashboard',$data);
   }
 
   /**
@@ -40,7 +40,7 @@ class MoneyController extends Controller
   public function account(Request $request)
   {
       $data = array(
-        
+
       );
       return Money::inertia()->render($request, 'Money/Account', $data);
   }

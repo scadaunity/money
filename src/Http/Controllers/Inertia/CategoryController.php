@@ -39,8 +39,9 @@ class CategoryController extends Controller
     {
         // Validate the request...
         $request->validate([
-            'name' => ['required', 'string', 'max:50', 'min:3', 'unique:money_categories,name'],
+            'name' => ['required', 'string', 'max:50', 'min:3'],
         ]);
+
 
 
         // converte nome

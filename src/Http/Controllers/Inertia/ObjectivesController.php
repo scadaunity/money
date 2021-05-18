@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use ScadaUnity\Money\Money;
-use ScadaUnity\Money\Models\Transactions;
+use ScadaUnity\Money\Models\Objectives;
 use Laravel\Jetstream\Jetstream;
 use App\Models\User;
 
@@ -15,7 +15,7 @@ use App\Models\User;
 /**
  *
  */
-class TransactionsController extends Controller
+class ObjectivesController extends Controller
 {
 
   /**
@@ -26,7 +26,7 @@ class TransactionsController extends Controller
    */
   public function index(Request $request, Money $money)
   {
-      return Money::inertia()->render($request, 'Money/Transactions');
+      return Money::inertia()->render($request, 'Money/Objectives');
   }
 
   /**
@@ -35,7 +35,7 @@ class TransactionsController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-    public function store(Request $request, Transactions $transactions)
+    public function store(Request $request, Objectives $objectives)
     {
         //dd($request);
         //Validate the request...
@@ -49,13 +49,13 @@ class TransactionsController extends Controller
 
 
         // converte nome
-        $transactions->amount = $request->amount;
-        $transactions->type = $request->type;
-        $transactions->description = ucfirst($request->description);
-        $transactions->user = Auth::id();
-        $transactions->category = $request->category;
-        $transactions->account = $request->account;
-        $transactions->save();
+        $objectives->amount = $request->amount;
+        $objectives->type = $request->type;
+        $objectives->description = ucfirst($request->description);
+        $objectives->user = Auth::id();
+        $objectives->category = $request->category;
+        $objectives->account = $request->account;
+        $objectives->save();
 
         return back()->with('flash', [
             'success' => 'Conta criada com sucesso',

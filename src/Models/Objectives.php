@@ -5,7 +5,7 @@ namespace ScadaUnity\Money\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Objectives extends Model
 {
   use HasFactory;
 
@@ -14,21 +14,14 @@ class Category extends Model
      *
      * @var string
      */
-    protected $table = 'money_categories';
+    protected $table = 'money_accounts';
 
     /**
        * The attributes that are mass assignable.
        *
        * @var array
        */
-      protected $fillable = ['user', 'team', 'name', 'state', 'type', 'color', 'icon'];
+      protected $fillable = ['name', 'user', 'opening_balance'];
 
-      /**
-     * Get the subcategories for the categories.
-     */
-    public function subcategories()
-    {
-        return $this->hasMany(Category::class, 'parent_id');
-    }
 
 }

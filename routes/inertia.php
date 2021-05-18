@@ -5,6 +5,7 @@ use ScadaUnity\Money\Http\Controllers\Inertia\MoneyController;
 use ScadaUnity\Money\Http\Controllers\Inertia\AccountController;
 use ScadaUnity\Money\Http\Controllers\Inertia\CategoryController;
 use ScadaUnity\Money\Http\Controllers\Inertia\TransactionsController;
+use ScadaUnity\Money\Http\Controllers\Inertia\ObjectivesController;
 use ScadaUnity\Money\Money;
 
 Route::group(['middleware' => config('money.middleware', ['web'])], function () {
@@ -29,5 +30,10 @@ Route::group(['middleware' => config('money.middleware', ['web'])], function () 
         Route::post('/money/transactions/store', [TransactionsController::class, 'store'])->name('money.transactions.store');
         Route::put('/money/transactions/{transaction}', [TransactionsController::class, 'update'])->name('money.transactions.update');
         Route::delete('/money/transactions/{transaction}', [TransactionsController::class, 'destroy'])->name('money.transactions.destroy');
+        // Resource Objectives
+        Route::get('/money/objectives', [ObjectivesController::class, 'index'])->name('money.objectives');
+        Route::post('/money/objectives/store', [ObjectivesController::class, 'store'])->name('money.objectives.store');
+        Route::put('/money/objectives/{transaction}', [ObjectivesController::class, 'update'])->name('money.objectives.update');
+        Route::delete('/money/objectives/{transaction}', [ObjectivesController::class, 'destroy'])->name('money.objectives.destroy');
     });
 });
