@@ -44,7 +44,8 @@ class TransactionsController extends Controller
             'type'=>['required','numeric'],
             'description' => ['required', 'string', 'max:50', 'min:3'],
             'category' =>['required', 'numeric'],
-            'account'=>['required', 'numeric']
+            'account'=>['required', 'numeric'],
+            'date'=>['required']
         ]);
 
 
@@ -55,6 +56,7 @@ class TransactionsController extends Controller
         $transactions->user = Auth::id();
         $transactions->category = $request->category;
         $transactions->account = $request->account;
+        $transactions->date = $request->date;
         $transactions->save();
 
         return back()->with('flash', [

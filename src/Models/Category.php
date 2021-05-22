@@ -23,12 +23,20 @@ class Category extends Model
        */
       protected $fillable = ['user', 'team', 'name', 'state', 'type', 'color', 'icon'];
 
-      /**
+    /**
      * Get the subcategories for the categories.
-     */
+    */
     public function subcategories()
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(Category::class, 'parent_id')->with('transactions');
+    }
+
+    /**
+     * Get the transaction for the categories.
+    */
+    public function transactions()
+    {
+        return $this->hasMany(Transactions::class, 'category');
     }
 
 }
