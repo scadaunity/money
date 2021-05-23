@@ -15,7 +15,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'scadaunity:money.install {stack : The development stack that should be installed}
+    protected $signature = 'money:install {stack : The development stack that should be installed}
                                               {--teams : Indicates if team support should be installed}
                                               {--composer=global : Absolute path to the Composer binary which should be used to install packages}';
 

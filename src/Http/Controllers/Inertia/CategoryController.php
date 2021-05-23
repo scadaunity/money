@@ -48,7 +48,6 @@ class CategoryController extends Controller
         $category->name = ucfirst($request->name);
         $category->parent_id = $request->parent_id;
         $category->user = Auth::id();
-        $category->team = 1;
         $category->color = $request->color;
         $category->icon = '';
         $category->type = 0;

@@ -1,5 +1,5 @@
 {
-    "name": "scadaunity/money",
+    "name": "money",
     "description": "Sistema financeiro Laravel 8",
     "type": "library",
     "license": "MIT",
