@@ -18,7 +18,7 @@ class CreateMoneyTransactionsTable extends Migration
             $table->foreignId('user')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('account')->references('id')->on('money_accounts')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('category')->references('id')->on('money_categories')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name');
+            $table->string('description');
             $table->date('date')->nullable();
             $table->decimal('amount',15,2)->nullable()->default(0);
             $table->boolean('pending')->default(false);
