@@ -21,7 +21,7 @@ class Category extends Model
        *
        * @var array
        */
-      protected $fillable = ['user', 'team', 'name', 'state', 'type', 'color', 'icon'];
+      protected $fillable = ['user', 'name', 'state', 'type', 'color', 'icon'];
 
     /**
      * Get the subcategories for the categories.
