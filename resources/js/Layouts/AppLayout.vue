@@ -2,41 +2,28 @@
     <div>
         <jet-banner />
 
-        <div class="min-h-screen select-none" :class="(mode === 'dark') ? ('bg-gray-900') : ('bg-gray-100')">
-            <nav class="border-b" :class="(mode === 'dark') ? ('bg-gray-900 border-gray-500') : ('bg-white')">
+        <div class="min-h-screen bg-gray-100">
+            <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-                                <inertia-link :href="route('dashboard')" class="flex items-center">
+                                <inertia-link :href="route('dashboard')">
                                     <jet-application-mark class="block h-9 w-auto" />
-                                    <span class="mt-2 text-green-600 font-bold">Money</span>
                                 </inertia-link>
                             </div>
 
-
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('money')" :active="route().current('money')">
-                                    Inicio
+                                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                                    Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('money.transactions')" :active="route().current('money.transactions')">
-                                    Transações
+                                <jet-nav-link :href="route('money')" :active="route().current('money.index')">
+                                    Money
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('money.account')" :active="route().current('money.account')" v-if="$page.props.money.permissions.account.show" >
-                                    Contas
-                                </jet-nav-link>
-                                <jet-nav-link :href="route('money.category')" :active="route().current('money.category')">
-                                    Categorias
-                                </jet-nav-link>
-                                <jet-nav-link :href="route('money.objectives')" :active="route().current('money.objectives')">
-                                    Objetivos
-                                </jet-nav-link>
-
                             </div>
-
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -95,7 +82,6 @@
                                 </jet-dropdown>
                             </div>
 
-
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
                                 <jet-dropdown align="right" width="48">
@@ -118,28 +104,15 @@
                                     <template #content>
                                         <!-- Account Management -->
                                         <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Gerenciar conta
+                                            Manage Account
                                         </div>
 
                                         <jet-dropdown-link :href="route('profile.show')">
-                                            Perfil
+                                            Profile
                                         </jet-dropdown-link>
 
                                         <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
                                             API Tokens
-                                        </jet-dropdown-link>
-
-                                        <jet-dropdown-link href="#" as="button" @click="switchMode()">
-                                            <span v-if="(mode == 'light')">Dark mode</span>
-                                            <span v-if="(mode == 'dark')">Light mode</span>
-
-                                        </jet-dropdown-link>
-
-
-
-
-                                        <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
-                                            Configurações
                                         </jet-dropdown-link>
 
                                         <div class="border-t border-gray-100"></div>
@@ -147,7 +120,7 @@
                                         <!-- Authentication -->
                                         <form @submit.prevent="logout">
                                             <jet-dropdown-link as="button">
-                                                Sair
+                                                Log Out
                                             </jet-dropdown-link>
                                         </form>
                                     </template>
@@ -170,20 +143,12 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                            Dashboard
+                        </jet-responsive-nav-link>
+
                         <jet-responsive-nav-link :href="route('money')" :active="route().current('money')">
-                            Inicio
-                        </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('money.transactions')" :active="route().current('money.transactions')">
-                            Transações
-                        </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('money.account')" :active="route().current('money.account')" v-if="$page.props.money.permissions.account.show">
-                            Contas
-                        </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('money.category')" :active="route().current('money.category')">
-                            Categorias
-                        </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('money.objectives')" :active="route().current('money.objectives')">
-                            Objetivos
+                            Money
                         </jet-responsive-nav-link>
                     </div>
 
@@ -202,7 +167,7 @@
 
                         <div class="mt-3 space-y-1">
                             <jet-responsive-nav-link :href="route('profile.show')" :active="route().current('profile.show')">
-                                Perfil
+                                Profile
                             </jet-responsive-nav-link>
 
                             <jet-responsive-nav-link :href="route('api-tokens.index')" :active="route().current('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
@@ -212,7 +177,7 @@
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
                                 <jet-responsive-nav-link as="button">
-                                    Sair
+                                    Log Out
                                 </jet-responsive-nav-link>
                             </form>
 
@@ -257,7 +222,7 @@
             </nav>
 
             <!-- Page Heading -->
-            <header :class="(mode === 'dark') ? (darkClass) : (lightClas)" v-if="$slots.header">
+            <header class="bg-white shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header"></slot>
                 </div>
@@ -267,7 +232,6 @@
             <main>
                 <slot></slot>
             </main>
-
         </div>
     </div>
 </template>
@@ -293,9 +257,6 @@
         data() {
             return {
                 showingNavigationDropdown: false,
-                mode:'light',
-                darkClass:'bg-gray-900 text-gray-500',
-                lightClas:'bg-white shadow'
             }
         },
 
@@ -308,28 +269,9 @@
                 })
             },
 
-            switchMode() {
-                if(this.mode == 'light'){
-                  this.mode = 'dark'
-                }
-                else{
-                  this.mode = 'light'
-                }
-            },
-
             logout() {
                 this.$inertia.post(route('logout'));
             },
-        },
-        mounted() {
-          if (localStorage.mode) {
-            this.mode = localStorage.mode;
-          }
-        },
-        watch: {
-          mode(newMode) {
-            localStorage.mode = newMode;
-          }
         }
     }
 </script>

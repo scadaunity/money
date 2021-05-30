@@ -88,9 +88,20 @@
           */
           addData(label,series){
             if(series > 0){
-              this.options.labels.push(label + ' R$ ' + series)
-              this.series.push(series)
+              let tempSeries = series.toFixed(2)
+              let floatSeries = parseFloat(tempSeries)
+              this.options.labels.push(label + this.format(series))
+              this.series.push(floatSeries)
+              console.log(label + series)
             }
+          },
+          format(value){
+            if(value > 0){
+              return ' R$ ' + value.toFixed(2).replace(".", ",")
+            } else {
+              return 'R$ 00,00'
+            }
+
           }
       },
       beforeMount(){

@@ -1,7 +1,7 @@
 <template>
 
-  <div class="w-full lg:w-1/4">
-      <div class="w-full p-4 rounded-lg bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
+  <div class="w-full lg:w-1/3">
+      <div class="w-full p-4 rounded-lg bg-white border border-gray-200 shadow hover:bg-gray-100">
           <div class="flex flex-row items-center justify-between">
 
               <div class="flex flex-col">

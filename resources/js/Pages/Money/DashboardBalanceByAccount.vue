@@ -1,20 +1,19 @@
 <template>
     <jet-action-section>
         <template #title>
-            Visão geral
+            Meus saldos
         </template>
 
         <template #description>
-            Acompanhe o resumo de suas finanças.
+            Acompanhe o saldo das suas contas.
             <br>
         </template>
 
         <template #content>
-            <div class=" mb-6 flex flex-col lg:flex-row w-full lg:space-x-2 space-y-2 lg:space-y-0 mb-2 lg:mb-4">
-                <states v-if="show.balance" label="Saldo" :value="balance" percent="0"/>
-                <states v-if="show.incoming" label="Receitas" :value="incoming" percent="0"/>
-                <states v-if="show.expenses" label="Despesas" :value="expenses" percent="0"/>
-                <states v-if="show.cards" label="Meus cartões" value="00.00" percent="0"/>
+            <div class="col-span-6 sm:col-span-4">
+                <div v-for="account in accounts" :key="account.id" >
+                    {{account.name}}
+                </div>
             </div>
         </template>
     </jet-action-section>
@@ -28,6 +27,11 @@
       components: {JetActionSection,States},
       data: function() {
         return {
+          accounts:[
+            { name: 'Carteira', amount: '150,00' },
+            { name: 'Caixa', amount: '150,00' },
+            { name: 'Neon', amount: '150,00' },
+          ],
           balance:null,
           incoming:null,
           expenses:null,
@@ -43,13 +47,12 @@
       methods:{
         render(){
           this.balance = this.format(this.getBalance())
-          this.incoming = this.format(this.getIncoming())
-          this.expenses = this.format(this.getExpenses())
         },
         getOpeningBalance(){
           let openingBalance = null
           this.$page.props.money.account.forEach((account, i) => {
             openingBalance = openingBalance + parseFloat(account.opening_balance)
+            console.log(account)
           });
           return openingBalance
         },
