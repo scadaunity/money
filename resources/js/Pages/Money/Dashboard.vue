@@ -9,9 +9,9 @@
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
 
-                <dashboard-balance />
-
                 <dashboard-balance-by-account />
+
+                <dashboard-balance />
 
                 <dashboard-expenses-by-category />
 
