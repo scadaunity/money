@@ -92,7 +92,6 @@
               let floatSeries = parseFloat(tempSeries)
               this.options.labels.push(label + this.format(series))
               this.series.push(floatSeries)
-              console.log(label + series)
             }
           },
           format(value){

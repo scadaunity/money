@@ -193,7 +193,6 @@
                     preserveScroll: false
                     ,
                     onSuccess: () => {
-                        console.log('Conta criada com sucesso')
                         this.createAccountForm.reset()
                     }
                 })

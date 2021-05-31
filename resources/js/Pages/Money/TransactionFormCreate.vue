@@ -138,7 +138,6 @@
                 this.createTransactionForm.post(route('money.transactions.store'), {
                     preserveScroll: false,
                     onSuccess: () => {
-                        console.log('Conta criada com sucesso')
                         this.createTransactionForm.reset()
                     }
                 })

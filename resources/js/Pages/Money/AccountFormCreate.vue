@@ -71,7 +71,6 @@
                 this.createAccountForm.post(route('money.account.store'), {
                     preserveScroll: false,
                     onSuccess: () => {
-                        console.log('Conta criada com sucesso')
                         this.createAccountForm.reset()
                     }
                 })

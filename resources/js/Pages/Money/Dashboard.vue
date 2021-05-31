@@ -7,17 +7,13 @@
         </template>
 
         <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-6">
-                <div>
-                    <dashboard-balance class="mt-10 sm:mt-0"/>
-                    <jet-section-border />
-                </div>
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 space-y-4">
 
-                <dashboard-balance-by-account class="mt-10 sm:mt-0"/>
-                <jet-section-border />
+                <dashboard-balance />
 
-                <dashboard-expenses-by-category class="mt-10 sm:mt-0"/>
-                <jet-section-border />
+                <dashboard-balance-by-account />
+
+                <dashboard-expenses-by-category />
 
             </div>
         </div>

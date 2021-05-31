@@ -12,7 +12,7 @@
                             <div class="flex-shrink-0 flex items-center">
                                 <inertia-link :href="route('dashboard')" class="flex items-center">
                                     <jet-application-mark class="block h-9 w-auto" />
-                                    <span class="mt-2 text-green-600 font-bold">Money</span>
+                                    <span class="mt-2 text-green-600 font-bold">Teste</span>
                                 </inertia-link>
                             </div>
 
